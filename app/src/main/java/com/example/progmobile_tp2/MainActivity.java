@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -45,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         envoyer.setOnClickListener(envoyerListener);
         reset.setOnClickListener(resetListener);
         commentaire.setOnClickListener(checkedListener);
-        taille.addTextChangedListener(textWatcher);
-        poids.addTextChangedListener(textWatcher);
+        taille.setOnKeyListener(modifListener);
+        poids.setOnKeyListener(modifListener);
     }
 
     /**
@@ -180,17 +181,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-    private TextWatcher textWatcher = new TextWatcher() {
-
+    // Se lance à chaque fois qu'on appuie sur une touche en étant sur un EditText
+    private View.OnKeyListener modifListener = new View.OnKeyListener() {
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            result.setText(texteInit);
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            // On remet le texte à sa valeur par défaut
+            //result.setText(texteInit);
+
+            //vérifie la présence d'un . pour modifier le radio
+            String s = taille.getText().toString();
+            if (s.contains(".")) {
+                group.check(R.id.radio_metre);
+            }
+            return false;
         }
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-        @Override
-        public void afterTextChanged(Editable s) {}
     };
 
     private String interpreteIMC(float imc){
