@@ -6,14 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 class PlaneteAdapter extends BaseAdapter {
     private MainActivity mainActivity;
     private Data data;
+
+    private int checked_elements = 0;
 
     public PlaneteAdapter(MainActivity mainActivity, Data data) {
         this.mainActivity = mainActivity;
@@ -55,8 +61,22 @@ class PlaneteAdapter extends BaseAdapter {
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                CheckBox checkBox = (CheckBox) compoundButton.findViewById(R.id.checkbox);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Button btnVerifier = mainActivity.findViewById(R.id.btnVerifier);
+                if (checkBox.isChecked()){
+                    checked_elements++;
+                }
+                else {
+                    checked_elements--;
+                }
+                if (checked_elements >= data.getPlanetes().size()){
+                    btnVerifier.setEnabled(true);
+                }
+                else {
+                    if (btnVerifier.isEnabled()){
+                        btnVerifier.setEnabled(false);
+                    }
+                }
                 spinner.setEnabled(!checkBox.isChecked());
                 spinadapter.notifyDataSetChanged();
             }
@@ -64,4 +84,6 @@ class PlaneteAdapter extends BaseAdapter {
 
         return itemView;
     }
+    //----------------------------------------------------------------------------------------------
+
 }

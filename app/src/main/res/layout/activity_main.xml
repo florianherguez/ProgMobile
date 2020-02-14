@@ -16,7 +16,7 @@
     </ListView>
 
     <Button
-        android:id="@+id/verifier"
+        android:id="@+id/btnVerifier"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Vérifier"
