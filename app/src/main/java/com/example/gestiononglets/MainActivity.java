@@ -18,13 +18,21 @@ import com.example.gestiononglets.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
+    ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+        // Créer un adaptateur qui retourne un fragment
+        // pour chacune des sections de l'activité
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
+
+        // dire au viewpager d'utiliser cet adaptateur
+        this.viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
+
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
@@ -53,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Snackbar snackbar = Snackbar.make(viewPager, "Action Changed", Snackbar.LENGTH_LONG);
+        snackbar.show();
+
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
